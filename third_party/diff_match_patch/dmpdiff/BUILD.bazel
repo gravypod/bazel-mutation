@@ -1,0 +1,8 @@
+cc_binary(
+    name = "dmpdiff",
+    srcs = [
+        "dmpdiff.cpp",
+        "getopt.h",
+    ],
+    deps = ["//third_party/diff_match_patch"],
+)

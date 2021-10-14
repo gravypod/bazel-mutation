@@ -1,0 +1,161 @@
+cc_binary(
+    name = "mutants_main",
+    srcs = ["mutants_main.cc"],
+    deps = [
+        ":bazel",
+        ":executor",
+        ":mutator_java",
+        ":sandbox",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
+)
+
+cc_library(
+    name = "bazel",
+    srcs = ["bazel.cc"],
+    hdrs = ["bazel.h"],
+    deps = [
+        "//third_party/bazel:build_cc_proto",
+        "//third_party/subprocess",
+        "@com_github_protocolbuffers_protobuf//:protobuf",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_library(
+    name = "executor",
+    srcs = ["executor.cc"],
+    hdrs = ["executor.h"],
+    deps = [
+        ":changes",
+        ":mutator",
+        ":mutator_java",
+        ":sandbox",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_library(
+    name = "changes",
+    srcs = ["changes.cc"],
+    hdrs = ["changes.h"],
+    deps = [
+        "//third_party/diff_match_patch:diff",
+        "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+    ],
+)
+
+cc_test(
+    name = "changes_test",
+    srcs = ["changes_test.cc"],
+    deps = [
+        ":changes",
+        "//third_party/random_string",
+        "//third_party/tensorflow:status_matcher",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "sandbox",
+    srcs = ["sandbox.cc"],
+    hdrs = ["sandbox.h"],
+    deps = [
+        ":bazel",
+        ":changes",
+        "//third_party/random_string",
+        "@com_google_absl//absl/status:statusor",
+    ],
+)
+
+cc_binary(
+    name = "sandbox_main",
+    srcs = ["sandbox_main.cc"],
+    deps = [
+        ":bazel",
+        ":sandbox",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
+)
+
+cc_binary(
+    name = "bazel_main",
+    srcs = ["bazel_main.cc"],
+    deps = [
+        ":bazel",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
+)
+
+cc_library(
+    name = "mutator",
+    hdrs = ["mutator.h"],
+    deps = [
+        "//third_party/diff_match_patch:diff",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_library(
+    name = "sandwitch",
+    srcs = ["sandwich.cc"],
+    hdrs = ["sandwich.h"],
+    deps = [
+        ":mutator",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_library(
+    name = "ts",
+    srcs = ["ts.cc"],
+    hdrs = ["ts.h"],
+    deps = [
+        ":mutator",
+        "//third_party/tree_sitter",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_library(
+    name = "mutator_java",
+    srcs = ["mutator_java.cc"],
+    hdrs = ["mutator_java.h"],
+    deps = [
+        ":mutator",
+        ":sandwitch",
+        ":ts",
+        "//third_party/tree_sitter",
+        "//third_party/tree_sitter/java",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_test(
+    name = "mutate_java_test",
+    srcs = ["mutator_java_test.cc"],
+    deps = [
+        ":mutator",
+        ":mutator_java",
+        "@com_google_absl//absl/strings",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

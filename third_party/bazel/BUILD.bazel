@@ -1,0 +1,32 @@
+proto_library(
+    name = "build_proto",
+    srcs = ["build.proto"],
+)
+
+cc_proto_library(
+    name = "build_cc_proto",
+    visibility = ["//visibility:public"],
+    deps = [":build_proto"],
+)
+
+proto_library(
+    name = "analysis_proto",
+    srcs = ["analysis.proto"],
+    deps = [":build_proto"],
+)
+
+cc_proto_library(
+    name = "analysis_cc_proto",
+    deps = [":analysis_proto"],
+)
+
+proto_library(
+    name = "analysis_v2_proto",
+    srcs = ["analysis_v2.proto"],
+    deps = [":build_proto"],
+)
+
+cc_proto_library(
+    name = "analysis_v2_cc_proto",
+    deps = [":analysis_v2_proto"],
+)

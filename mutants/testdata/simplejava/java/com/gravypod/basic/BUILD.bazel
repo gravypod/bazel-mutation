@@ -1,0 +1,19 @@
+exports_files([
+    "Basic.java",
+    "BasicTest.java",
+    "BUILD.bazel",
+])
+
+java_library(
+    name = "Basic",
+    srcs = ["Basic.java"],
+)
+
+java_test(
+    name = "BasicTest",
+    srcs = ["BasicTest.java"],
+    deps = [
+        ":Basic",
+        "@maven//:junit_junit",
+    ],
+)

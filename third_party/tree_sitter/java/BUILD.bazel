@@ -1,0 +1,20 @@
+cc_library(
+  name = "java",
+  srcs = ["java.c"],
+  hdrs = ["java.h"],
+  deps = ["//third_party/tree_sitter"],
+  visibility = ["//visibility:public"],
+)
+
+cc_test(
+  name = "java_test",
+  srcs = ["java_test.cc"],
+  deps = [
+    ":java",
+    "//third_party/tree_sitter",
+    "@com_google_absl//absl/strings",
+    "@com_google_googletest//:gtest",
+    "@com_google_googletest//:gtest_main",
+  ],
+)
+

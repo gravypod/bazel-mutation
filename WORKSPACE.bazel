@@ -1,0 +1,51 @@
+workspace(name = "mutants")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# C++ Standard library
+http_archive(
+    name = "com_google_absl",
+    strip_prefix = "abseil-cpp-278e0a071885a22dcd2fd1b5576cc44757299343",
+    urls = ["https://github.com/abseil/abseil-cpp/archive/278e0a071885a22dcd2fd1b5576cc44757299343.zip"],
+)
+
+# C++ rules
+http_archive(
+    name = "rules_cc",
+    sha256 = "9a446e9dd9c1bb180c86977a8dc1e9e659550ae732ae58bd2e8fd51e15b2c91d",
+    strip_prefix = "rules_cc-262ebec3c2296296526740db4aefce68c80de7fa",
+    urls = ["https://github.com/bazelbuild/rules_cc/archive/262ebec3c2296296526740db4aefce68c80de7fa.zip"],
+)
+
+# Googletest
+http_archive(
+    name = "com_google_googletest",
+    sha256 = "6a5d7d63cd6e0ad2a7130471105a3b83799a7a2b14ef7ec8d742b54f01a4833c",
+    strip_prefix = "googletest-011959aafddcd30611003de96cfd8d7a7685c700",
+    urls = ["https://github.com/google/googletest/archive/011959aafddcd30611003de96cfd8d7a7685c700.zip"],
+)
+
+# Benchmarking
+http_archive(
+    name = "com_github_google_benchmark",
+    sha256 = "2a778d821997df7d8646c9c59b8edb9a573a6e04c534c01892a40aa524a7b68c",
+    strip_prefix = "benchmark-bf585a2789e30585b4e3ce6baf11ef2750b54677",
+    urls = ["https://github.com/google/benchmark/archive/bf585a2789e30585b4e3ce6baf11ef2750b54677.zip"],
+)
+
+# Protobuf
+http_archive(
+    name = "rules_proto",
+    sha256 = "66bfdf8782796239d3875d37e7de19b1d94301e8972b3cbd2446b332429b4df1",
+    strip_prefix = "rules_proto-4.0.0",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/refs/tags/4.0.0.tar.gz",
+        "https://github.com/bazelbuild/rules_proto/archive/refs/tags/4.0.0.tar.gz",
+    ],
+)
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()

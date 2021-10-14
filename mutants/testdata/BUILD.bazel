@@ -1,0 +1,11 @@
+filegroup(
+    name = "simplejava",
+    testonly = 1,
+    srcs = [
+        "simplejava/WORKSPACE.bazel",
+        "//mutants/testdata/simplejava/java/com/gravypod/basic:BUILD.bazel",
+        "//mutants/testdata/simplejava/java/com/gravypod/basic:Basic.java",
+        "//mutants/testdata/simplejava/java/com/gravypod/basic:BasicTest.java",
+    ],
+    visibility = ["//mutants:__subpackages__"],
+)

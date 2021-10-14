@@ -1,0 +1,11 @@
+cc_library(
+    name = "status_matcher",
+    srcs = ["status_matchers.cc"],
+    hdrs = ["status_matchers.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_googletest//:gtest",
+    ],
+)

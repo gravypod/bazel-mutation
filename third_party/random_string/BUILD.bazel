@@ -1,0 +1,6 @@
+cc_library(
+    name = "random_string",
+    srcs = ["random_string.cc"],
+    hdrs = ["random_string.h"],
+    visibility = ["//visibility:public"],
+)

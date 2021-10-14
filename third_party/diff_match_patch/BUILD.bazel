@@ -1,0 +1,47 @@
+cc_library(
+    name = "diff_match_patch",
+    srcs = ["diff_match_patch.cc"],
+    hdrs = ["diff_match_patch.h"],
+    visibility = ["//third_party/diff_match_patch:__subpackages__"],
+    deps = [
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_test(
+    name = "diff_patch_match_test",
+    srcs = ["diff_match_patch_test.cc"],
+    deps = [
+        ":diff_match_patch",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_binary(
+    name = "example",
+    srcs = ["example.cc"],
+    deps = [":diff_match_patch"],
+)
+
+cc_library(
+    name = "diff",
+    srcs = ["diff.cc"],
+    hdrs = ["diff.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":diff_match_patch",
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+cc_test(
+    name = "diff_test",
+    srcs = ["diff_test.cc"],
+    deps = [
+        ":diff",
+        "@com_google_absl//absl/strings",
+        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
