@@ -1,0 +1,2 @@
+build --cxxopt='-std=c++2a' --enable_bzlmod
+
